@@ -1,0 +1,11 @@
+[{:itonami.blueprint/social-impact [:electronics-safety :system-quality :site-documentation]
+  :itonami.blueprint/domain :engineering/electronics
+  :itonami.blueprint/required-technologies [:robotics :identity :survey-forms :dmn :audit-ledger]
+  :itonami.blueprint/isco-08 "3114"
+  :itonami.blueprint/name "Electronics Engineering Technicians"
+  :itonami.blueprint/governor :elex-governor
+  :itonami.blueprint/robotics true
+  :db/id -1
+  :itonami.blueprint/status :public-oss
+  :itonami.blueprint/id "cloud-itonami-isco-3114"
+  :itonami.blueprint/license "AGPL-3.0-or-later"}]
