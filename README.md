@@ -62,14 +62,14 @@ human-in-the-loop interrupt/resume via checkpointing.
                                            +-> :hold               (:hard? true)
 ```
 
-- `src/elex/store.cljc` — `Store` protocol + `MemStore`:
+- `src/elex/store.kotoba` — `Store` protocol + `MemStore`:
   registered electronics projects/sites, committed test/inspection records, an append-only audit ledger.
-- `src/elex/advisor.cljc` — `Advisor` protocol; `mock-advisor`
+- `src/elex/advisor.kotoba` — `Advisor` protocol; `mock-advisor`
   (deterministic, default) proposes a test/inspection operation from a request; `llm-advisor`
   wraps a `langchain.model/ChatModel` — either way the advisor only ever
   produces a `:propose`-effect proposal, never a committed record, and LLM parse
   failures always yield `confidence 0.0` (forces escalation, never fabricated confidence).
-- `src/elex/governor.cljc` — `ElexGovernor/check`: a pure function,
+- `src/elex/governor.kotoba` — `ElexGovernor/check`: a pure function,
   wired as its own `:govern` node. Hard invariants (unregistered project,
   a proposal whose `:effect` isn't `:propose`) always route to `:hold`.
   Escalation invariants (`:flag-safety-hazard` or low advisor confidence)
@@ -77,7 +77,7 @@ human-in-the-loop interrupt/resume via checkpointing.
   graph checkpoints and only resumes on explicit human approval (`actor/approve!`),
   matching the README's robotics-premise statement that electronics hazards
   always require human sign-off.
-- `src/elex/actor.cljc` — `build-graph`, `run-request!`, `approve!`:
+- `src/elex/actor.kotoba` — `build-graph`, `run-request!`, `approve!`:
   the `langgraph.graph/state-graph` wiring itself.
 
 ```bash

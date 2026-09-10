@@ -123,7 +123,7 @@ production:
 
 ## Customizing the Governor
 
-The Governor policy is in `src/elex/governor.cljc`. If your project has
+The Governor policy is in `src/elex/governor.kotoba`. If your project has
 different safety rules:
 
 1. Modify the `:escalate?` logic (e.g., additional ops that require human
@@ -193,7 +193,7 @@ escalation, never fabricated confidence).
 ## Further reading
 
 - [`README.md`](../README.md) — project overview and design rationale.
-- [`src/elex/governor.cljc`](../src/elex/governor.cljc) — hard/escalation
+- [`src/elex/governor.kotoba`](../src/elex/governor.kotoba) — hard/escalation
   invariants.
-- [`src/elex/actor.cljc`](../src/elex/actor.cljc) — StateGraph wiring and
+- [`src/elex/actor.kotoba`](../src/elex/actor.kotoba) — StateGraph wiring and
   flow.
