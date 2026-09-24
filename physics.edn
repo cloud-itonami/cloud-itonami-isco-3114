@@ -1,0 +1,33 @@
+;; What this vertical's robot physically does, declared for
+;; kotoba.robotics.process (kotoba-lang/robotics). `kbb -M:physics` runs it.
+;;
+;; README "Robotics premise": an electronics test/inspection robot performs
+;; electronics test data recording, inspection logging and site documentation
+;; for electronics engineering technicians (ISCO 3114). Its physical work is
+;; placing a board into a test fixture, and top-side hot-air rework on a
+;; 1.6 mm FR-4 board, where the joints on the back side must not remelt.
+;;
+;; Every number without a cited source is marked `estimate` in its :basis.
+;; Replacing an estimate with a sourced value is this bot's growth work.
+{:physics/schema "itonami.physical-ai.spec.v1"
+ :repo "cloud-itonami/cloud-itonami-isco-3114"
+ :cases
+ [{:id :board-into-test-fixture
+   :kind :manipulator
+   :procedure "small arm picks a populated board (or board in carrier) from the tray and seats it on the bed-of-nails fixture"
+   :params {:l1-m 0.25 :l2-m 0.20 :m1-kg 1.5 :m2-kg 1.0
+            :from [0.30 0.05] :to [0.15 0.25] :duration-s 1.0 :steps 400}
+   :sweep {:param :payload-kg :values [0.1 0.3 0.6 1.0 2.0]}
+   :quantity :peak-tau1-nm
+   :limit {:max 8.0 :basis "estimate: continuous shoulder torque of a desktop arm (~1 kg payload class)"}
+   :boundary {:lo 0.01 :hi 10.0}}
+  {:id :rework-backside-joints
+   :kind :thermal
+   :procedure "hot-air rework nozzle heats the top side of a 1.6 mm FR-4 board; the robot times how long before back-side joints near their melting point"
+   :params {:thickness-m 0.0016 :conductivity-w-mk 0.3 :density-kg-m3 1850.0 :specific-heat-j-kgk 1100.0
+            :t0-c 25.0 :t-hot-c 320.0 :h-front-w-m2k 100.0 :t-back-ambient-c 25.0 :h-back-w-m2k 10.0
+            :threshold-c 217.0 :nodes 11}
+   :sweep {:param :duration-s :values [10.0 20.0 40.0 60.0 90.0]}
+   :quantity :final-back-c
+   :limit {:max 217.0 :basis "estimate: ~217 C, the commonly quoted melting point of SAC305 lead-free solder; back-side joints must stay below it"}
+   :boundary {:lo 5.0 :hi 300.0}}]}
